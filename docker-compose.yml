@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  back-end:
+    image: nest-backend
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./project:/project
+    working_dir: /project
+    command: ["npm", "run", "start:dev"]
+  
+  # DB:
+  #   image: mariadb:11.3.2

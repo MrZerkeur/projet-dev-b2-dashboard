@@ -1,14 +1,14 @@
 WELCOME TO THIS ADMIN DASHBOARD PROJECT !
 
 
-# DEV VERSION
+# DEV - LINUX VERSION
 
 Build the image :
 ```
-docker build -t nest-dev-backend -f backend-dev.Dockerfile .
+docker build -t nest-dev-backend-linux -f backend-dev-linux.Dockerfile .
 ```
 
 Run the container :
 ```
-docker compose -f docker-compose-dev.yml up -d
+docker compose -f docker-compose-dev-linux.yml up -d
 ```

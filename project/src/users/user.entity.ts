@@ -13,12 +13,12 @@ export class User {
   lastName: string;
 
   @Column('varchar', {
-    name: 'mail',
+    name: 'email',
     length: 100,
     unique: true,
     nullable: false,
   })
-  mail: string;
+  email: string;
 
   @Column('varchar', { name: 'password_hash', length: 62, nullable: false })
   passwordHash: string;

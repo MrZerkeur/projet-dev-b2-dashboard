@@ -10,5 +10,3 @@ services:
       MYSQL_DATABASE: db_projet_dev
     ports:
       - "3306:3306"
-    volumes:
-      - "./seven_twitter.sql:/docker-entrypoint-initdb.d/1.sql"

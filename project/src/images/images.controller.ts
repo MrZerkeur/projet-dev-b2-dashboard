@@ -12,14 +12,14 @@ export class ImagesController {
   @Get()
   @Render('all-images')
   allImages() {
-    return this.imagesService.getAllImages();
+    return this.imagesService.findAll();
   }
 
   @Get('add')
   @Render('add-image')
   async addImage() {
-    this.imagesService.addImage();
-    const resp = await this.notificationService.notifyImageModifications();
-    return { response: resp };
+    // this.imagesService.create();
+    // const resp = await this.notificationService.notifyImageModifications();
+    // return { response: resp };
   }
 }

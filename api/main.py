@@ -11,7 +11,7 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-@app.route("/users")
+@app.route("/users", methods=['GET'])
 def get_users():
     cursor.execute('SELECT * FROM users')
     users = cursor.fetchall()

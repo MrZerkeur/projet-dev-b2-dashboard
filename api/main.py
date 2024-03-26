@@ -11,15 +11,16 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-@app.route("/users", methods=['GET'])
-def get_users():
-    cursor.execute('SELECT * FROM users')
-    users = cursor.fetchall()
-    user_list = []
-    for user in users:
-        user_dict = {'id': user[0], 'name': user[1], 'email': user[2]}
-        user_list.append(user_dict)
-    return jsonify({'users': user_list})
+@app.route("/users//<int:user_id>", methods=['GET'])
+def get_users(user_id):
+    return str(user_id)
+    # cursor.execute('SELECT * FROM users')
+    # users = cursor.fetchall()
+    # user_list = []
+    # for user in users:
+    #     user_dict = {'id': user[0], 'name': user[1], 'email': user[2]}
+    #     user_list.append(user_dict)
+    # return jsonify({'users': user_list})
 
 
 if __name__ == '__main__':

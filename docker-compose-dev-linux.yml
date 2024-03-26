@@ -1,19 +1,19 @@
 version: "3"
 
 services:
-  back-end:
-    image: nest-dev-backend-linux
-    ports:
-      - "127.0.0.1:3000:3000"
-    volumes:
-      - ./project:/project
-    working_dir: /project
-    command: ["npm", "run", "start:dev"]
+  # back-end:
+  #   image: nest-dev-backend-linux
+  #   ports:
+  #     - "127.0.0.1:3000:3000"
+  #   volumes:
+  #     - ./project:/project
+  #   working_dir: /project
+  #   command: ["npm", "run", "start:dev"]
   
   DB:
     image: mariadb:11.3.2
     ports:
-      - "127.0.0.1:3306:3306"
+      - "3306:3306"
     volumes:
       - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
@@ -21,3 +21,22 @@ services:
       - MYSQL_USER=db_projet_dev
       - MYSQL_PASSWORD=test
       - MYSQL_DATABASE=db_projet_dev
+    healthcheck:
+        test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+        start_period: 1m
+        start_interval: 10s
+        interval: 1m
+        timeout: 5s
+        retries: 3
+  
+  API:
+    image: python-api
+    depends_on:
+      DB:
+        condition: service_healthy
+    volumes:
+      - "./api:/api"
+    ports:
+      - "127.0.0.1:5000:5000"
+    working_dir: /api
+    command: ["python", main.py]

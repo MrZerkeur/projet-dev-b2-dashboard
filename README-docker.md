@@ -12,3 +12,9 @@ Run the container :
 ```
 docker compose -f docker-compose-dev-linux.yml up -d
 ```
+
+# API
+
+```
+docker build -t nest-dev-backend-linux -f backend-dev-linux.Dockerfile .
+```

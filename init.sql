@@ -32,3 +32,13 @@ CREATE table if not exists db_projet_dev.texts (
 	site_id integer,
 	foreign key (site_id) references sites(site_id)
 );
+
+INSERT INTO db_projet_dev.users 
+(first_name, name, mail, password_hash, salt) 
+values ("axel", "Broquaire", "test@gmail.com", "test", "aze");
+INSERT INTO db_projet_dev.users 
+(first_name, name, mail, password_hash, salt) 
+values ("test1", "test1", "test1@gmail.com", "test", "aze");
+INSERT INTO db_projet_dev.users 
+(first_name, name, mail, password_hash, salt) 
+values ("test2", "test2", "test2@gmail.com", "test", "aze");

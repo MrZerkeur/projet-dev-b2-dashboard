@@ -1,7 +1,7 @@
 import { Site } from 'src/modules/sites/entity/site.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
-@Entity()
+@Entity('images')
 export class Image {
   @PrimaryGeneratedColumn('uuid', { name: 'image_id' })
   id: string;

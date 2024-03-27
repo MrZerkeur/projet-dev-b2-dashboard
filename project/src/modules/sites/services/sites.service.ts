@@ -17,6 +17,10 @@ export class SitesService {
     return this.sitesRepository.save(site);
   }
 
+  update(site: Site): Promise<Site> {
+    return this.sitesRepository.save(site);
+  }
+
   findAll(): Promise<Site[]> {
     return this.sitesRepository.find();
   }

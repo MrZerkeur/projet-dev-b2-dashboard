@@ -9,9 +9,14 @@
 <body class="flex flex-row h-screen">
     <header class="w-1/5 bg-black">
         <h1 class="text-white text-4xl">Admin Dashboard</h1>
+        <h2 class="text-white text-2xl">{{ site.name }}</h2>
     </header>
     <main class="w-auto">
         <h1>Texts</h1>
+        {{#each site.texts}}
+        <h2>{{ this.sectionName }}</h2>
+        <p>{{ this.content }}</p>
+        {{/each}}
     </main>
 </body>
 </html>

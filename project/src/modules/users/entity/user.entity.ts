@@ -1,7 +1,7 @@
 import { Site } from 'src/modules/sites/entity/site.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid', { name: 'user_id' })
   id: string;

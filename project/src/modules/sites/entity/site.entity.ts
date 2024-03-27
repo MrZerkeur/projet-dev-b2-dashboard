@@ -10,7 +10,7 @@ import {
   JoinTable,
 } from 'typeorm';
 
-@Entity()
+@Entity('sites')
 export class Site {
   @PrimaryGeneratedColumn('uuid', { name: 'site_id' })
   id: string;
@@ -18,13 +18,17 @@ export class Site {
   @Column('varchar', { name: 'name', length: 30, unique: true })
   name: string;
 
-  @ManyToMany(() => User, (user) => user.sites)
-  @JoinTable()
+  @ManyToMany(() => User, (user) => user.sites, { cascade: true })
+  @JoinTable({
+    name: 'sites_users',
+    joinColumn: { name: 'site_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'user_id', referencedColumnName: 'id' },
+  })
   users: User[];
 
-  @OneToMany(() => Image, (image) => image.site)
+  @OneToMany(() => Image, (image) => image.site, { cascade: true })
   images: Image[];
 
-  @OneToMany(() => Text, (text) => text.site)
+  @OneToMany(() => Text, (text) => text.site, { cascade: true })
   texts: Text[];
 }

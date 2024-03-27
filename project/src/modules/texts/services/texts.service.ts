@@ -28,6 +28,10 @@ export class TextsService {
     return this.textsRepository.findOneBy({ id });
   }
 
+  findBySite(site: Site): Promise<Text[] | null> {
+    return this.textsRepository.find({ where: { site: site } });
+  }
+
   async remove(id: string): Promise<void> {
     await this.textsRepository.delete(id);
   }

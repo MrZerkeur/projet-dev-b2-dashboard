@@ -5,14 +5,14 @@ import { SitesService } from '../services/sites.service';
 export class SitesController {
   constructor(private readonly sitesService: SitesService) {}
 
-  @Get(':id')
+  @Get(':name')
   @Render('site-home')
-  async findOne(@Param('id') id: string) {
-    return { site: await this.sitesService.findOneById(id) };
+  async findOne(@Param('name') name: string) {
+    return { site: await this.sitesService.findOneByName(name) };
   }
 
-  @Get('create')
-  async create() {
-    return;
-  }
+  // @Get('create')
+  // async create() {
+  //   return;
+  // }
 }

@@ -1,40 +1,56 @@
-import { Body, Controller, Get, Post, Render } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Redirect,
+  Render,
+} from '@nestjs/common';
 import { TextsService } from 'src/modules/texts/services/texts.service';
-import { NotificationsService } from 'src/modules/notifications/services/notifications.service';
+// import { NotificationsService } from 'src/modules/notifications/services/notifications.service';
 import { CreateTextDto } from '../dto/create-text.dto';
-// import { SitesService } from 'src/sites/sites.service';
+import { SitesService } from 'src/modules/sites/services/sites.service';
 
-@Controller('texts')
+@Controller('sites/:name/texts')
 export class TextsController {
   constructor(
-    // private sitesService: SitesService,
+    private sitesService: SitesService,
     private textsService: TextsService,
-    private notificationService: NotificationsService,
+    // private notificationService: NotificationsService,
   ) {}
 
   @Get()
   @Render('all-texts')
-  async allTexts() {
-    return { texts: await this.textsService.findAll() };
+  async allTexts(@Param('name') name: string) {
+    const site = await this.sitesService.findOneByName(name);
+    const texts = await this.textsService.findBySite(site);
+    site.texts = texts;
+    console.log(site);
+    return { site: site };
   }
 
   @Get('add')
   @Render('add-text')
-  renderAddText() {
-    return;
+  async renderAddText(@Param('name') name: string) {
+    return { site: { name: name } };
   }
 
-  // @Post('add')
-  // async addText(@Body() createTextDto: CreateTextDto) {
-  //   // TODO Controller for adding text
-  //   // const site = await this.sitesService.findOneByName('hayto-dlo');
+  @Post('add')
+  async addText(
+    @Param('name') name: string,
+    @Body() createTextDto: CreateTextDto,
+  ) {
+    const site = await this.sitesService.findOneByName(name);
 
-  //   // this.textsService.create(
-  //   //   createTextDto.content,
-  //   //   createTextDto.sectionName,
-  //   //   site,
-  //   // );
-  //   // const resp = await this.notificationService.notifyTextModifications();
-  //   // return { response: resp };
-  // }
+    const text = await this.textsService.create(
+      createTextDto.content,
+      createTextDto.sectionName,
+      site,
+    );
+    console.log(text);
+    return Redirect(`/sites/${name}/texts/`);
+    // const resp = await this.notificationService.notifyTextModifications();
+    // return { response: resp };
+  }
 }

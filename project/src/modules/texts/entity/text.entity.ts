@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Site } from 'src/modules/sites/entity/site.entity';
 
-@Entity()
+@Entity('texts')
 export class Text {
   @PrimaryGeneratedColumn('uuid', { name: 'text_id' })
   id: string;

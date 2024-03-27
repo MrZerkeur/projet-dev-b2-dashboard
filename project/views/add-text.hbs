@@ -9,11 +9,11 @@
 <body class="flex flex-row h-screen">
     <header class="w-1/5 bg-black">
         <h1 class="text-white text-4xl">Admin Dashboard</h1>
-        <h2 class="text-white">{{websiteName}}</h2>
+        <h2 class="text-white">{{ site.name }}</h2>
     </header>
     <main class="w-auto">
         <h1>Ajouter un texte</h1>
-        <form action="/texts/add" method="post">
+        <form action="/sites/{{ site.name }}/texts/add" method="post">
           <label for="content">Contenu du texte</label>
           <input type="text" name="content" id="content">
           <label for="section-name">Nom de la section</label>

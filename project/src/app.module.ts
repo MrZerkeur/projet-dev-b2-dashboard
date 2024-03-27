@@ -3,11 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './modules/users/users.module';
 import { typeOrmConfig } from './config/typeorm';
-import { SitesModule } from './sites/sites.module';
-import { TextsModule } from 'src/texts/texts.module';
-import { ImagesModule } from 'src/images/images.module';
+import { SitesModule } from './modules/sites/sites.module';
+import { TextsModule } from './modules/texts/texts.module';
+import { ImagesModule } from './modules/images/images.module';
 
 @Module({
   imports: [

@@ -11,9 +11,9 @@ conn = mysql.connector.connect(
 )
 cursor = conn.cursor()
 
-@app.route("/users//<int:user_id>", methods=['GET'])
-def get_users(user_id):
-    return str(user_id)
+@app.route("/sites/<id_site>/images", methods=['GET'])
+def get_images(id_site):
+    return id_site
     # cursor.execute('SELECT * FROM users')
     # users = cursor.fetchall()
     # user_list = []
@@ -22,6 +22,10 @@ def get_users(user_id):
     #     user_list.append(user_dict)
     # return jsonify({'users': user_list})
 
+
+@app.route("/sites/<id_site>/texts", methods=['GET'])
+def get_texts(id_site):
+    return id_site
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

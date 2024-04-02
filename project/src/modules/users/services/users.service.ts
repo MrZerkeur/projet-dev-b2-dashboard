@@ -21,6 +21,7 @@ export class UsersService {
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
+    // TODO add real password logic
     user.passwordHash = 'passwordhashed';
     user.salt = 'salt';
 
@@ -37,6 +38,28 @@ export class UsersService {
 
   findOneByEmail(email: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ email });
+  }
+
+  async update(
+    userId: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    // * password: string,
+    // * confirmPassword: string,
+  ): Promise<User> {
+    const user = await this.findOneById(userId);
+    if (firstName) {
+      user.firstName = firstName;
+    }
+    if (lastName) {
+      user.lastName = lastName;
+    }
+    if (email) {
+      user.email = email;
+    }
+    // TODO add password update logic
+    return this.usersRepository.save(user);
   }
 
   async remove(id: string): Promise<void> {

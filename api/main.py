@@ -25,7 +25,11 @@ def get_images(id_site):
 
 @app.route("/sites/<id_site>/texts", methods=['GET'])
 def get_texts(id_site):
-    return id_site
+    cursor.execute('SELECT content, section_name from db_projet_dev.texts t WHERE site_id = %s;', (id_site,))
+    texts = cursor.fetchall()
+    texts_json = [{'content': text[0], 'section_name': text[1]} for text in texts]
 
+    return jsonify({'texts': texts_json})
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

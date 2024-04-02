@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 import mysql.connector
+import requests
 
 app = Flask(__name__)
 
@@ -13,14 +14,15 @@ cursor = conn.cursor()
 
 @app.route("/sites/<id_site>/images", methods=['GET'])
 def get_images(id_site):
-    return id_site
-    # cursor.execute('SELECT * FROM users')
-    # users = cursor.fetchall()
-    # user_list = []
-    # for user in users:
-    #     user_dict = {'id': user[0], 'name': user[1], 'email': user[2]}
-    #     user_list.append(user_dict)
-    # return jsonify({'users': user_list})
+    url = 'http://file-server:8000/chat.jpeg'
+    filename = 'chat.jpeg'
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(filename, 'wb') as f:
+            f.write(response.content)
+        return send_file(filename, mimetype='image/jpeg')
+    else:
+        return "Failed to download image."
 
 
 @app.route("/sites/<id_site>/texts", methods=['GET'])

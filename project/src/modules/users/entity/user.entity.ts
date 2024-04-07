@@ -23,7 +23,7 @@ export class User {
   @Column('varchar', { name: 'password_hash', length: 62, nullable: false })
   passwordHash: string;
 
-  @Column('varchar', { name: 'salt', length: 15, nullable: false })
+  @Column('varchar', { name: 'salt', length: 30, nullable: false })
   salt: string;
 
   @ManyToMany(() => Site, (site) => site.users)

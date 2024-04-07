@@ -5,9 +5,10 @@ import { NotificationsService } from '../notifications/services/notifications.se
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Text } from './entity/text.entity';
 import { SitesModule } from '../sites/sites.module';
+import { UserAccessModule } from '../user-access/user-access.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Text]), SitesModule],
+  imports: [TypeOrmModule.forFeature([Text]), SitesModule, UserAccessModule],
   controllers: [TextsController],
   providers: [TextsService, NotificationsService],
 })

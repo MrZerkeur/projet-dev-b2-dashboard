@@ -1,27 +1,20 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get, Param, UseFilters, UseGuards } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
+import { AuthExceptionFilter } from 'src/common/filters/auth-exceptions.filter';
+import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard';
 
 @Controller('users')
+@UseGuards(AuthenticatedGuard)
+@UseFilters(AuthExceptionFilter)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get()
-  allUsers() {
-    return;
+  async allUsers() {
+    return { users: await this.usersService.findAll() };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOneById(id);
-  }
-
-  @Get('create')
-  @Render('created-user')
-  async create() {
-    const user = await this.usersService.create(
-      'Luc',
-      'JeanJean',
-      'luc.jeanjean@mail.com',
-    );
-    return { user: user };
+  async findOne(@Param('id') id: string) {
+    return { user: await this.usersService.findOneById(id) };
   }
 }

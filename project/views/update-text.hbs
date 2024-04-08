@@ -22,7 +22,18 @@
       <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
     </header>
     <main class="w-4/5">
-        <h1>{{ site.name }}</h1>
+        <h1>Modifier un texte</h1>
+        <form action="/sites/{{ site.name }}/texts/{{ text.id }}" method="post">
+          <label for="content">Contenu du texte: </label>
+          <input type="text" name="content" id="content" value="{{ text.content }}" required>
+          <label for="section-name">Nom de la section: </label>
+          <select name="sectionName" id="section-name" value="{{ text.sectionName }}" required>
+            <option value="title">Titre</option>
+            <option value="subtitle">Sous-titre</option>
+            {{!-- TODO Add other section name --}}
+          </select>
+          <input type="submit" value="Confirmer">
+        </form>
     </main>
 </body>
 </html>

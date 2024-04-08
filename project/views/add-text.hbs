@@ -7,17 +7,31 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body class="flex flex-row h-screen">
-    <header class="w-1/5 bg-black">
-        <h1 class="text-white text-4xl">Admin Dashboard</h1>
-        <h2 class="text-white">{{ site.name }}</h2>
+    <header class="w-1/5 bg-black flex flex-col gap-8">
+      <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+      <h2 class="text-white text-2xl self-center"><a href="/sites/{{site.name}}/">{{ site.name }}</a></h2>
+      <div class="flex flex-col gap-4">
+        <a href="/sites/{{site.name}}/texts/" class="text-white text-2xl">Tous les textes</a>
+        <a href="/sites/{{site.name}}/texts/add" class="text-white text-2xl">Ajouter un texte</a>
+      </div>
+      <div class="flex flex-col gap-4">
+        <a href="/sites/{{site.name}}/images/" class="text-white text-2xl">Toutes les images</a>
+        <a href="/sites/{{site.name}}/images/add" class="text-white text-2xl">Ajouter une image</a>
+      </div>
+      <a href="/profile" class="text-white text-2xl">Mon compte</a>
+      <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
     </header>
-    <main class="w-auto">
+    <main class="w-4/5">
         <h1>Ajouter un texte</h1>
         <form action="/sites/{{ site.name }}/texts/add" method="post">
-          <label for="content">Contenu du texte</label>
-          <input type="text" name="content" id="content">
-          <label for="section-name">Nom de la section</label>
-          <input type="text" name="sectionName" id="section-name">
+          <label for="content">Contenu du texte: </label>
+          <input type="text" name="content" id="content" required>
+          <label for="section-name">Nom de la section: </label>
+          <select name="sectionName" id="section-name" required>
+            <option value="title">Titre</option>
+            <option value="subtitle">Sous-titre</option>
+            {{!-- TODO Add other section name --}}
+          </select>
           <input type="submit" value="Confirmer">
         </form>
     </main>

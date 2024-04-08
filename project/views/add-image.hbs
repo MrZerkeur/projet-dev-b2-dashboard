@@ -7,13 +7,22 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body class="flex flex-row h-screen">
-    <header class="w-1/5 bg-black">
-        <h1 class="text-white text-4xl">Admin Dashboard</h1>
-        <h2 class="text-white">{{websiteName}}</h2>
+    <header class="w-1/5 bg-black flex flex-col gap-8">
+      <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+      <h2 class="text-white text-2xl self-center"><a href="/sites/{{site.name}}/">{{ site.name }}</a></h2>
+      <div class="flex flex-col gap-4">
+        <a href="/sites/{{site.name}}/texts/" class="text-white text-2xl">Tous les textes</a>
+        <a href="/sites/{{site.name}}/texts/add" class="text-white text-2xl">Ajouter un texte</a>
+      </div>
+      <div class="flex flex-col gap-4">
+        <a href="/sites/{{site.name}}/images/" class="text-white text-2xl">Toutes les images</a>
+        <a href="/sites/{{site.name}}/images/add" class="text-white text-2xl">Ajouter une image</a>
+      </div>
+      <a href="/profile" class="text-white text-2xl">Mon compte</a>
+      <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
     </header>
-    <main class="w-auto">
-        <h1>Ajouter une images</h1>
-        <h2>{{ response }}</h2>
+    <main class="w-4/5">
+        <h1>Ajouter une image</h1>
     </main>
 </body>
 </html>

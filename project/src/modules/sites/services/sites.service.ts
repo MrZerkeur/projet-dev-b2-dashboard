@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 export class SitesService {
   constructor(
     @InjectRepository(Site)
-    private sitesRepository: Repository<Site>,
+    private readonly sitesRepository: Repository<Site>,
   ) {}
 
   create(name: string): Promise<Site> {
@@ -22,7 +22,11 @@ export class SitesService {
   }
 
   findAll(): Promise<Site[]> {
-    return this.sitesRepository.find();
+    return this.sitesRepository.find({
+      relations: {
+        users: true,
+      },
+    });
   }
 
   findOneById(id: string): Promise<Site | null> {
@@ -31,6 +35,50 @@ export class SitesService {
 
   findOneByName(name: string): Promise<Site | null> {
     return this.sitesRepository.findOneBy({ name });
+  }
+
+  findOneByNameWithUsers(name: string): Promise<Site | null> {
+    return this.sitesRepository.findOne({
+      where: { name: name },
+      select: {
+        id: true,
+        name: true,
+        users: { id: true, email: true, firstName: true, lastName: true },
+      },
+      relations: { users: true },
+    });
+  }
+
+  findOneByNameWithUsersTexts(name: string): Promise<Site | null> {
+    return this.sitesRepository.findOne({
+      where: { name: name },
+      select: {
+        id: true,
+        name: true,
+        users: { id: true, email: true, firstName: true, lastName: true },
+        texts: { id: true, content: true, sectionName: true },
+      },
+      relations: {
+        users: true,
+        texts: true,
+      },
+    });
+  }
+
+  findOneByNameWithUsersImages(name: string): Promise<Site | null> {
+    return this.sitesRepository.findOne({
+      where: { name: name },
+      select: {
+        id: true,
+        name: true,
+        users: { id: true, email: true, firstName: true, lastName: true },
+        images: { id: true, name: true, sectionName: true, path: true },
+      },
+      relations: {
+        users: true,
+        images: true,
+      },
+    });
   }
 
   async remove(id: string): Promise<void> {

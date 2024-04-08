@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entity/user.entity';
+import { genSalt, hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -10,20 +11,24 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  create(
+  async create(
     firstName: string,
     lastName: string,
     email: string,
-    // * password: string,
-    // * confirmPassword: string,
+    password: string,
+    confirmPassword: string,
   ): Promise<User> {
     const user = new User();
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
     // TODO add real password logic
-    user.passwordHash = 'passwordhashed';
-    user.salt = 'salt';
+
+    if (password !== confirmPassword) {
+      throw new UnauthorizedException("Passwords don't match");
+    }
+
+    [user.passwordHash, user.salt] = await this.hashPassword(password);
 
     return this.usersRepository.save(user);
   }
@@ -38,6 +43,19 @@ export class UsersService {
 
   findOneByEmail(email: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ email });
+  }
+
+  findOneByIdWithSites(id: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { id: id },
+      relations: { sites: true },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        sites: { name: true },
+      },
+    });
   }
 
   async update(
@@ -64,5 +82,13 @@ export class UsersService {
 
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
+  }
+
+  async hashPassword(plainTextPassword: string): Promise<[string, string]> {
+    const saltRounds = 10;
+    const salt = await genSalt(saltRounds);
+    const hashedPassword = await hash(plainTextPassword, salt);
+
+    return [hashedPassword, salt];
   }
 }

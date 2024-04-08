@@ -7,12 +7,23 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body class="flex flex-row h-screen">
-    <header class="w-1/5 bg-black">
-        <h1 class="text-white text-4xl">Admin Dashboard</h1>
-        <h2 class="text-white">{{ websiteName }}</h2>
-    </header>
-    <main class="w-auto">
-        <p>caca</p>
-    </main>
+  <header class="w-1/5 bg-black flex flex-col gap-8">
+    <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+    <a href="/profile" class="text-white text-2xl">Mon compte</a>
+    <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
+  </header>
+  <main class="w-4/5">
+    <h1 class="text-3xl">Bienvenue {{ this.firstName }} {{ this.lastName }}</h1>
+    {{#if this.sites.length}}
+      <h1 class="text-2xl font-semibold">Vos sites</h1>
+      <ul>
+      {{#each this.sites}}
+        <li><a href="/sites/{{this.name}}/" class="text-xl">{{this.name}}</a></li>
+      {{/each}}
+      </ul>
+    {{else}}
+      <h1>Vous n'avez aucun site</h1>
+    {{/if}}
+  </main>
 </body>
 </html>

@@ -1,18 +1,25 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller, Get, Param, Render, Req, UseGuards } from '@nestjs/common';
 import { ImagesService } from '../services/images.service';
 import { NotificationsService } from 'src/modules/notifications/services/notifications.service';
+import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard';
+import { SitesService } from 'src/modules/sites/services/sites.service';
+import { UserAccessService } from 'src/modules/user-access/services/user-access.service';
 
-@Controller('images')
+@Controller('sites/:name/images')
+@UseGuards(AuthenticatedGuard)
 export class ImagesController {
   constructor(
     private imagesService: ImagesService,
     private notificationService: NotificationsService,
+    private sitesService: SitesService,
+    private userAccessService: UserAccessService,
   ) {}
 
   @Get()
   @Render('all-images')
-  allImages() {
-    return this.imagesService.findAll();
+  async allImages(@Param('name') name: string, @Req() req) {
+    const site = await this.sitesService.findOneByNameWithUsersImages(name);
+    return this.userAccessService.grantUserAccess(req.user, site);
   }
 
   @Get('add')

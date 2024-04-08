@@ -5,7 +5,6 @@ import {
   HttpException,
   UnauthorizedException,
   ForbiddenException,
-  InternalServerErrorException,
 } from '@nestjs/common';
 import { Response } from 'express';
 
@@ -14,14 +13,13 @@ export class AuthExceptionFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    // const status = exception.getStatus();
 
-    console.log('Exception caught:', exception);
-    console.log('Exception stack trace:', exception.stack);
+    console.log(exception);
 
     if (
       exception instanceof UnauthorizedException ||
-      exception instanceof ForbiddenException ||
-      exception instanceof InternalServerErrorException
+      exception instanceof ForbiddenException
     ) {
       console.log('Redirecting to /login');
       response.status(302).redirect('/login');

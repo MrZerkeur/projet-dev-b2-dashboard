@@ -1,22 +1,12 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Render,
-  Req,
-  UseFilters,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, Render, Req, UseGuards } from '@nestjs/common';
 import { ImagesService } from '../services/images.service';
 import { NotificationsService } from 'src/modules/notifications/services/notifications.service';
 import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard';
 import { SitesService } from 'src/modules/sites/services/sites.service';
 import { UserAccessService } from 'src/modules/user-access/services/user-access.service';
-import { AuthExceptionFilter } from 'src/common/filters/auth-exceptions.filter';
 
 @Controller('sites/:name/images')
 @UseGuards(AuthenticatedGuard)
-@UseFilters(AuthExceptionFilter)
 export class ImagesController {
   constructor(
     private imagesService: ImagesService,

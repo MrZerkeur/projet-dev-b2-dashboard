@@ -1,19 +1,9 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Render,
-  Req,
-  UseFilters,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Param, Render, Req, UseGuards } from '@nestjs/common';
 import { SitesService } from '../services/sites.service';
 import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard';
 import { UserAccessService } from 'src/modules/user-access/services/user-access.service';
-import { AuthExceptionFilter } from 'src/common/filters/auth-exceptions.filter';
 
 @Controller('sites')
-@UseFilters(AuthExceptionFilter)
 export class SitesController {
   constructor(
     private sitesService: SitesService,

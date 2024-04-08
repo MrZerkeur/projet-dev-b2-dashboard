@@ -6,14 +6,15 @@
     <title>Admin Dashboard</title>
     <link href="/css/main.css" rel="stylesheet">
 </head>
-<body class="flex flex-row h-screen">
-      <h1>Login</h1>
-      <form action="/login" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email">
-        <label for="password">Mot de passe:</label>
-        <input type="password" name="password" id="password">
-        <input type="submit" value="Confirmer">
-      </form>
+<body class="flex flex-col h-screen">
+  <h1>Login</h1>
+  <form action="/login" method="post">
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email">
+    <label for="password">Mot de passe:</label>
+    <input type="password" name="password" id="password">
+    <input type="submit" value="Confirmer">
+  </form>
+  <a href="/register">Pas de compte, créez votre compte ici</a>
 </body>
 </html>

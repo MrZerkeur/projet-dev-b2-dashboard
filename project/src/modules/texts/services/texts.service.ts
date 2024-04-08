@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Text } from '../entity/text.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -20,6 +20,10 @@ export class TextsService {
     return this.textsRepository.save(text);
   }
 
+  update(text: Text): Promise<Text> {
+    return this.textsRepository.save(text);
+  }
+
   findAll(): Promise<Text[]> {
     return this.textsRepository.find();
   }
@@ -33,6 +37,9 @@ export class TextsService {
   }
 
   async remove(id: string): Promise<void> {
+    if (!(await this.findOneById(id))) {
+      throw new BadRequestException(`Cannot remove text with id ${id}`);
+    }
     await this.textsRepository.delete(id);
   }
 }

@@ -52,6 +52,12 @@ export class SitesService {
   findOneByNameWithUsersTexts(name: string): Promise<Site | null> {
     return this.sitesRepository.findOne({
       where: { name: name },
+      select: {
+        id: true,
+        name: true,
+        users: { id: true, email: true, firstName: true, lastName: true },
+        texts: { id: true, content: true, sectionName: true },
+      },
       relations: {
         users: true,
         texts: true,
@@ -62,6 +68,12 @@ export class SitesService {
   findOneByNameWithUsersImages(name: string): Promise<Site | null> {
     return this.sitesRepository.findOne({
       where: { name: name },
+      select: {
+        id: true,
+        name: true,
+        users: { id: true, email: true, firstName: true, lastName: true },
+        images: { id: true, name: true, sectionName: true, path: true },
+      },
       relations: {
         users: true,
         images: true,

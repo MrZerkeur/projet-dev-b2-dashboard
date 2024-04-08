@@ -45,6 +45,19 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
+  findOneByIdWithSites(id: string): Promise<User | null> {
+    return this.usersRepository.findOne({
+      where: { id: id },
+      relations: { sites: true },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        sites: { name: true },
+      },
+    });
+  }
+
   async update(
     userId: string,
     firstName: string,

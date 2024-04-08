@@ -7,13 +7,53 @@
     <link href="/css/main.css" rel="stylesheet">
 </head>
 <body class="flex flex-row h-screen">
-    <header class="w-1/5 bg-black">
-        <h1 class="text-white text-4xl">Admin Dashboard</h1>
-        <h2 class="text-white">{{websiteName}}</h2>
+    <header class="w-1/5 bg-black flex flex-col gap-8">
+      <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+      <h2 class="text-white text-2xl self-center"><a href="/sites/{{site.name}}/">{{ site.name }}</a></h2>
+      <div class="flex flex-col gap-4">
+        <a href="/sites/{{site.name}}/texts/" class="text-white text-2xl">Tous les textes</a>
+        <a href="/sites/{{site.name}}/texts/add" class="text-white text-2xl">Ajouter un texte</a>
+      </div>
+      <div class="flex flex-col gap-4">
+        <a href="/sites/{{site.name}}/images/" class="text-white text-2xl">Toutes les images</a>
+        <a href="/sites/{{site.name}}/images/add" class="text-white text-2xl">Ajouter une image</a>
+      </div>
+      <a href="/profile" class="text-white text-2xl">Mon compte</a>
+      <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
     </header>
-    <main class="w-auto">
-        <h1>Images</h1>
-        <img src={{images}} alt="image">
+    <main class="w-4/5">
+      <div class="px-12 py-6 flex flex-row items-center gap-6">
+        <h1 class="text-4xl font-medium">Images</h1>
+        <a href="/sites/{{site.name}}/images/add" class="px-6 py-2 border border-black bg-slate-200 rounded-lg font-semibold">Ajouter</a>
+      </div>
+      <div class="px-12 py-6 w-full">
+        <table class="w-full table-auto border-collapse border border-black">
+          <thead>
+            <tr>
+              {{!-- <th class="border text-xl"></th> --}}
+              <th class="border text-xl">Nom de l'image</th>
+              <th class="border text-xl">Section associée</th>
+              <th class="border w-8"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each site.images}}
+            <tr>
+              {{!-- <td class="px-6 py-4 whitespace-wrap border">{{ this.image }}</td> --}}
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.name }}</td>
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.sectionName }}</td>
+              <td class="px-6 py-4 whitespace-wrap border">
+                <a href="/sites/{{ ../site.name }}/images/delete/{{this.id}}">
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
+                    <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
     </main>
 </body>
 </html>

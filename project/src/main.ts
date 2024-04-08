@@ -6,6 +6,7 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import * as process from 'process';
 import * as dotenv from 'dotenv';
+import { AuthExceptionFilter } from './common/filters/auth-exceptions.filter';
 
 async function bootstrap() {
   dotenv.config();
@@ -20,10 +21,12 @@ async function bootstrap() {
       secret: process.env.SESSION_SECRET,
       resave: Boolean(process.env.SESSION_RESAVE),
       saveUninitialized: Boolean(process.env.SESSION_SAVE_UNINITIALIZED),
+      cookie: { maxAge: Number(process.env.SESSION_MAX_AGE) },
     }),
   );
   app.use(passport.initialize());
   app.use(passport.session());
+  app.useGlobalFilters(new AuthExceptionFilter());
 
   await app.listen(3000);
 

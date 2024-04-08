@@ -54,6 +54,9 @@ INSERT INTO db_projet_dev.sites (name, host, port, user_id) values ('site_3', '3
 
 INSERT INTO db_projet_dev.texts (content, section_name, site_id) values ('test', 'test', 1);
 INSERT INTO db_projet_dev.texts (content, section_name, site_id) values ('test2', 'test2', 2);
+INSERT INTO db_projet_dev.texts (content, section_name, site_id) values ('test3', 'test2', 2);
 
-INSERT INTO db_projet_dev.images (name, image_path, section_name, site_id) values ('test.jpg', 'chemin/de/test.jpg', 'test', 1);
-INSERT INTO db_projet_dev.images (name, image_path, section_name, site_id) values ('test2.jpg', 'chemin/de/test2.jpg', 'test2', 2);
+INSERT INTO db_projet_dev.images (name, section_name, site_id, image_path) VALUES ('test1.jpg', 'test1', 1, CONCAT(site_id, '/', section_name, '/', name));
+INSERT INTO db_projet_dev.images (name, section_name, site_id, image_path) VALUES ('test2.jpg', 'test2', 2, CONCAT(site_id, '/', section_name, '/', name));
+INSERT INTO db_projet_dev.images (name, section_name, site_id, image_path) VALUES ('test3.jpg', 'test3', 2, CONCAT(site_id, '/', section_name, '/', name));
+INSERT INTO db_projet_dev.images (name, section_name, site_id, image_path) VALUES ('test4.jpg', 'test2', 2, CONCAT(site_id, '/', section_name, '/', name));

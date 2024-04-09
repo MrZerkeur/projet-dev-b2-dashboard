@@ -4,6 +4,7 @@ import requests
 import base64
 import os
 
+
 app = Flask(__name__)
 
 conn = mysql.connector.connect(
@@ -18,16 +19,15 @@ cursor = conn.cursor()
 def get_all_images(id_site):
     cursor.execute('SELECT name, image_path, section_name, site_id from db_projet_dev.images p where site_id = "%s";', (id_site,))
     rows = cursor.fetchall()
-    
     images_data = []
     for row in rows:
         image_path = row[1]
-        image_url = f"http://file-server:8000/{image_path}"
-        response = requests.get(image_url)
-        if response.status_code == 200:
-            image_data_base64 = base64.b64encode(response.content).decode('utf-8')
+        if os.path.exists(image_path):
+            with open(image_path, 'rb') as image_file:
+                image_data_base64 = base64.b64encode(image_file.read()).decode('utf-8')
         else:
             image_data_base64 = None
+        
         image_data = {
             'name': row[0],
             'image_base64': image_data_base64,
@@ -38,26 +38,24 @@ def get_all_images(id_site):
     
     return jsonify({'images_data': images_data})
 
-#Normalement ça marche mais à tester, attendre que les modifications soient faites sur la DB
 @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
 def get_specific_image(id_site, image_id):
-    cursor.execute('SELECT name, image_path, section_name from db_projet_dev.images p where image_uuid = "%s" and site_uuid = "%s";', (id_site, image_id,))
+    cursor.execute('SELECT name, image_path, section_name from db_projet_dev.images p where image_id = "%s" and site_id = "%s";', (image_id, id_site,))
     rows = cursor.fetchall()
-
     images_data = []
     for row in rows:
         image_path = row[1]
-        image_url = f"http://file-server:8000/{image_path}"
-        response = requests.get(image_url)
-        if response.status_code == 200:
-            image_data_base64 = base64.b64encode(response.content).decode('utf-8')
+        if os.path.exists(image_path):
+            with open(image_path, 'rb') as image_file:
+                image_data_base64 = base64.b64encode(image_file.read()).decode('utf-8')
         else:
             image_data_base64 = None
-            image_data = {
-                'name': row[0],
-                'image_base64': image_data_base64,
-                'section_name': row[2],
-            }
+        
+        image_data = {
+            'name': row[0],
+            'image_base64': image_data_base64,
+            'section_name': row[2],
+        }
         images_data.append(image_data)
     
     return jsonify({'images_data': images_data})
@@ -92,7 +90,7 @@ def add_image(id_site):
                         'error': str(e)}), 500
 
 @app.route("/sites/<id_site>/images", methods=["DELETE"])
-def  delete_image(id_site):
+def delete_image(id_site):
     if not request.json:
         return jsonify({'error': 'No JSON data received'}), 400
 
@@ -124,4 +122,54 @@ def get_texts(id_site):
     return jsonify({'texts': texts_json})
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
+
+
+# FONCTIONNE MAIS QUE SI ON UTILISE LE FILE SERVER
+
+# @app.route("/sites/<id_site>/images", methods=['GET'])
+# def get_all_images(id_site):
+#     cursor.execute('SELECT name, image_path, section_name, site_id from db_projet_dev.images p where site_id = "%s";', (id_site,))
+#     rows = cursor.fetchall()
+    
+#     images_data = []
+#     for row in rows:
+#         image_path = row[1]
+#         image_url = f"http://file-server:8000/{image_path}"
+#         response = requests.get(image_url)
+#         if response.status_code == 200:
+#             image_data_base64 = base64.b64encode(response.content).decode('utf-8')
+#         else:
+#             image_data_base64 = None
+#         image_data = {
+#             'name': row[0],
+#             'image_base64': image_data_base64,
+#             'section_name': row[2],
+#             'site_id': row[3],
+#         }
+#         images_data.append(image_data)
+    
+#     return jsonify({'images_data': images_data})
+
+# @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
+# def get_specific_image(id_site, image_id):
+#     cursor.execute('SELECT name, image_path, section_name from db_projet_dev.images p where image_id = "%s" and site_id = "%s";', (id_site, image_id,))
+#     rows = cursor.fetchall()
+
+#     images_data = []
+#     for row in rows:
+#         image_path = row[1]
+#         image_url = f"http://file-server:8000/{image_path}"
+#         response = requests.get(image_url)
+#         if response.status_code == 200:
+#             image_data_base64 = base64.b64encode(response.content).decode('utf-8')
+#         else:
+#             image_data_base64 = None
+#             image_data = {
+#                 'name': row[0],
+#                 'image_base64': image_data_base64,
+#                 'section_name': row[2],
+#             }
+#         images_data.append(image_data)
+    
+#     return jsonify({'images_data': images_data})

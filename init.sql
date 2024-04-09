@@ -1,34 +1,45 @@
-use db_projet_dev;
+CREATE DATABASE IF NOT EXISTS db_projet_dev;
 
-CREATE table if not exists db_projet_dev.users (
-	user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	first_name varchar(30) not null,
-	name varchar(50) not null,
-	mail varchar(100) unique not null,
-	password_hash varchar(62) not null,
-	salt varchar(15) not null
+USE db_projet_dev;
+
+CREATE TABLE IF NOT EXISTS db_projet_dev.users (
+    user_id UUID DEFAULT UUID() PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(62) NOT NULL,
+    salt VARCHAR(15) NOT NULL
 );
 
-CREATE table if not exists db_projet_dev.sites (
-	site_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	name varchar(30),
-	user_id integer,
-	foreign key (user_id) references users(user_id)
+CREATE TABLE IF NOT EXISTS db_projet_dev.sites (
+    site_id UUID DEFAULT UUID() PRIMARY KEY,
+    name VARCHAR(30),
+    host VARCHAR(15),
+    port VARCHAR(5),
+    user_id UUID NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE table if not exists db_projet_dev.pictures (
-	picture_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	name varchar(30)not null,
-	image_path text not null,
-	section_name varchar(50) not null,
-	site_id integer,
-	foreign key (site_id) references sites(site_id)
+CREATE TABLE IF NOT EXISTS db_projet_dev.sites_users (
+    site_id UUID NOT NULL,
+    user_id UUID NOT NULL,
+    FOREIGN KEY (site_id) REFERENCES sites(site_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE table if not exists db_projet_dev.texts (
-	text_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	content text not null,
-	section_name varchar(50) not null,
-	site_id integer,
-	foreign key (site_id) references sites(site_id)
+CREATE TABLE IF NOT EXISTS db_projet_dev.images (
+    image_id UUID DEFAULT UUID() PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    image_path TEXT NOT NULL,
+    section_name VARCHAR(50) NOT NULL,
+    site_id UUID NOT NULL,
+    FOREIGN KEY (site_id) REFERENCES sites(site_id)
+);
+
+CREATE TABLE IF NOT EXISTS db_projet_dev.texts (
+    text_id UUID DEFAULT UUID() PRIMARY KEY,
+    content TEXT NOT NULL,
+    section_name VARCHAR(50) NOT NULL,
+    site_id UUID NOT NULL,
+    FOREIGN KEY (site_id) REFERENCES sites(site_id)
 );

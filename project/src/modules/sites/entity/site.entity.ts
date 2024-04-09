@@ -18,6 +18,12 @@ export class Site {
   @Column('varchar', { name: 'name', length: 30, unique: true })
   name: string;
 
+  @Column('varchar', { name: 'host', length: 15 })
+  host: string;
+
+  @Column('varchar', { name: 'port', length: 5 })
+  port: string;
+
   @ManyToMany(() => User, (user) => user.sites, { cascade: true })
   @JoinTable({
     name: 'sites_users',

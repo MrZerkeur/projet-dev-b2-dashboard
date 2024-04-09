@@ -14,7 +14,6 @@ export class UserAccessService {
     loggedUser.firstName = user.firstName;
     loggedUser.lastName = user.lastName;
     loggedUser.email = user.email;
-    console.log(site.users);
     for (const user of site.users) {
       if (isEqual(user, loggedUser)) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

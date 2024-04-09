@@ -25,9 +25,10 @@
         <h1>Modifier un texte</h1>
         <form action="/sites/{{ site.name }}/texts/{{ text.id }}" method="post">
           <label for="content">Contenu du texte: </label>
-          <input type="text" name="content" id="content" value="{{ text.content }}" required>
+          <input type="text" name="content" id="content" value="{{ text.content }}">
           <label for="section-name">Nom de la section: </label>
-          <select name="sectionName" id="section-name" value="{{ text.sectionName }}" required>
+          <select name="sectionName" id="section-name">
+            <option value="">--Choisissez une section--</option>
             <option value="title">Titre</option>
             <option value="subtitle">Sous-titre</option>
             {{!-- TODO Add other section name --}}

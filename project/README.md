@@ -4,6 +4,15 @@
 
 ```bash
 $ npm install
+$ npm install express-session
+```
+
+Create a .env file
+```bash
+SESSION_SECRET=<secret-key>
+SESSION_MAX_AGE=10800000
+SESSION_RESAVE=false
+SESSION_SAVE_UNINITIALIZED=false
 ```
 
 ## Running the app

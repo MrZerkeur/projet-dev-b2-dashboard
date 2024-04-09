@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Image } from '../entity/image.entity';
 import { Repository } from 'typeorm';
+import { Site } from 'src/modules/sites/entity/site.entity';
 
 @Injectable()
 export class ImagesService {
@@ -10,8 +11,12 @@ export class ImagesService {
     private imagesRepository: Repository<Image>,
   ) {}
 
-  create(): Promise<Image> {
+  create(name: string, sectionName: string, site: Site): Promise<Image> {
     const image = new Image();
+    image.name = name;
+    image.sectionName = sectionName;
+    image.site = site;
+    image.path = `${site.id}/${sectionName}/${name}`;
 
     return this.imagesRepository.save(image);
   }

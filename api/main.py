@@ -106,7 +106,7 @@ def delete_image(id_site):
             if not os.listdir(dir_path):
                 os.rmdir(dir_path)
             
-            return jsonify({'message': 'Image deleted successfully'}), 200
+            return jsonify({'message': 'Image deleted successfully'}), 201
         else:
             return jsonify({'error': 'File not found'}), 404
     except Exception as e:

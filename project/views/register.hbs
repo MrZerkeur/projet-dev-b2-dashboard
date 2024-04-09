@@ -5,22 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="/css/main.css" rel="stylesheet">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="flex flex-col h-screen">
-  <h1>Register</h1>
-  <form action="/register" method="post">
-    <label for="firstname">Prénom:</label>
-    <input type="text" name="firstName" id="firstname" required>
-    <label for="lastname">Nom:</label>
-    <input type="text" name="lastName" id="lastname" required>
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required>
-    <label for="password">Mot de passe:</label>
-    <input type="password" name="password" id="password" required>
-    <label for="confirmpassword">Confirmer mot de passe:</label>
-    <input type="password" name="confirmPassword" id="confirmpassword" required>
-    <input type="submit" value="Confirmer">
+<body class="flex flex-col h-screen justify-center items-center bg-gray-100">
+  <h1 class="text-3xl font-bold mb-4">Register</h1>
+  <form action="/register" method="post" class="w-full max-w-md">
+    <div class="mb-4">
+      <label for="firstname" class="block text-gray-700 text-sm font-bold mb-2">Prénom:</label>
+      <input type="text" name="firstName" id="firstname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+    </div>
+    <div class="mb-4">
+      <label for="lastname" class="block text-gray-700 text-sm font-bold mb-2">Nom:</label>
+      <input type="text" name="lastName" id="lastname" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+    </div>
+    <div class="mb-4">
+      <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+      <input type="email" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+    </div>
+    <div class="mb-4">
+      <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Mot de passe:</label>
+      <input type="password" name="password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+    </div>
+    <div class="mb-6">
+      <label for="confirmpassword" class="block text-gray-700 text-sm font-bold mb-2">Confirmer mot de passe:</label>
+      <input type="password" name="confirmPassword" id="confirmpassword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+    </div>
+    <div class="flex items-center justify-between">
+      <input type="submit" value="Confirmer" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+    </div>
   </form>
-  <a href="/login">Vous avez déjà un compte, connectez-vous ici</a>
+  <a href="/login" class="mt-4 block text-sm text-blue-500 hover:text-blue-700">Vous avez déjà un compte, connectez-vous ici</a>
 </body>
 </html>

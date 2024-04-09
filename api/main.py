@@ -91,6 +91,29 @@ def add_image(id_site):
         return jsonify({'message': "An error occurred",
                         'error': str(e)}), 500
 
+@app.route("/sites/<id_site>/images", methods=["DELETE"])
+def  delete_image(id_site):
+    if not request.json:
+        return jsonify({'error': 'No JSON data received'}), 400
+
+    if 'path' not in request.json:
+        return jsonify({'error': 'Missing required fields in JSON data'}), 400
+    
+    path = request.json['path']
+
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+            dir_path = os.path.dirname(path)
+            if not os.listdir(dir_path):
+                os.rmdir(dir_path)
+            
+            return jsonify({'message': 'Image deleted successfully'}), 200
+        else:
+            return jsonify({'error': 'File not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route("/sites/<id_site>/texts", methods=['GET'])
 def get_texts(id_site):

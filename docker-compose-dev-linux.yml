@@ -42,11 +42,12 @@ services:
     command: ["python", main.py]
 
 
-  file-server:
-    image: python
-    volumes:
-      - "./file-server:/file-server"
-    working_dir: /file-server
-    ports:
-      - "127.0.0.1:8000:8000"
-    command: ["python3", "-m", "http.server", "8000"]
+  # file-server:
+  #   image: python-file-server
+  #   volumes:
+  #     - "./file-server:/file-server"
+  #   working_dir: /file-server
+  #   ports:
+  #     - "127.0.0.1:8000:8000"
+  #   # command: ["python3", "-m", "http.server", "8000"]
+  #   command: ["python3", "file-server.py"]

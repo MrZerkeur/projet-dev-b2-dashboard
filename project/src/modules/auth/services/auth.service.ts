@@ -20,7 +20,7 @@ export class AuthService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { passwordHash, salt, ...result } = user;
+    const { passwordHash, ...result } = user;
     return result;
   }
 }

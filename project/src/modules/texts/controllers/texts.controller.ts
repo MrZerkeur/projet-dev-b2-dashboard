@@ -72,7 +72,7 @@ export class TextsController {
     const site = await this.sitesService.findOneByNameWithUsers(name);
     this.userAccessService.grantUserAccess(req.user, site);
     const text = await this.textsService.findOneById(id);
-    return { site: site, text: text };
+    return { site: site, text: text, loggedInUser: req.user };
   }
 
   @Post(':id')

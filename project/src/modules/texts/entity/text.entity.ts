@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Site } from 'src/modules/sites/entity/site.entity';
 
 @Entity('texts')
@@ -13,5 +19,6 @@ export class Text {
   sectionName: string;
 
   @ManyToOne(() => Site, (site) => site.texts)
+  @JoinColumn({ name: 'site_id' })
   site: Site;
 }

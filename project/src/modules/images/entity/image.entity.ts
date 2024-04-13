@@ -1,5 +1,11 @@
 import { Site } from 'src/modules/sites/entity/site.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('images')
 export class Image {
@@ -16,5 +22,6 @@ export class Image {
   sectionName: string;
 
   @ManyToOne(() => Site, (site) => site.images)
+  @JoinColumn({ name: 'site_id' })
   site: Site;
 }

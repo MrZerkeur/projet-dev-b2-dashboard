@@ -10,10 +10,11 @@ export class SitesService {
     private readonly sitesRepository: Repository<Site>,
   ) {}
 
-  create(name: string): Promise<Site> {
+  create(name: string, host: string, port: string): Promise<Site> {
     const site = new Site();
     site.name = name;
-
+    site.host = host;
+    site.port = port;
     return this.sitesRepository.save(site);
   }
 
@@ -30,7 +31,10 @@ export class SitesService {
   }
 
   findOneById(id: string): Promise<Site | null> {
-    return this.sitesRepository.findOneBy({ id });
+    return this.sitesRepository.findOne({
+      where: { id: id },
+      relations: { users: true },
+    });
   }
 
   findOneByName(name: string): Promise<Site | null> {

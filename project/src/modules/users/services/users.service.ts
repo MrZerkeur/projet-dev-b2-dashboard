@@ -22,13 +22,14 @@ export class UsersService {
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
+    user.isAdmin = false;
     // TODO add real password logic
 
     if (password !== confirmPassword) {
       throw new UnauthorizedException("Passwords don't match");
     }
 
-    [user.passwordHash, user.salt] = await this.hashPassword(password);
+    user.passwordHash = await this.hashPassword(password);
 
     return this.usersRepository.save(user);
   }
@@ -84,11 +85,12 @@ export class UsersService {
     await this.usersRepository.delete(id);
   }
 
-  async hashPassword(plainTextPassword: string): Promise<[string, string]> {
+  async hashPassword(plainTextPassword: string): Promise<string> {
     const saltRounds = 10;
     const salt = await genSalt(saltRounds);
     const hashedPassword = await hash(plainTextPassword, salt);
+    console.log(hashedPassword);
 
-    return [hashedPassword, salt];
+    return hashedPassword;
   }
 }

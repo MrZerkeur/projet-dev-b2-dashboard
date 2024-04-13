@@ -9,15 +9,6 @@
 <body class="flex flex-row h-screen">
     <header class="w-1/5 bg-black flex flex-col gap-8">
       <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
-      <h2 class="text-white text-2xl self-center"><a href="/sites/{{site.name}}/">{{ site.name }}</a></h2>
-      <div class="flex flex-col gap-4">
-        <a href="/sites/{{site.name}}/texts/" class="text-white text-2xl">Tous les textes</a>
-        <a href="/sites/{{site.name}}/texts/add" class="text-white text-2xl">Ajouter un texte</a>
-      </div>
-      <div class="flex flex-col gap-4">
-        <a href="/sites/{{site.name}}/images/" class="text-white text-2xl">Toutes les images</a>
-        <a href="/sites/{{site.name}}/images/add" class="text-white text-2xl">Ajouter une image</a>
-      </div>
       {{#if loggedInUser.isAdmin}}
         <div class="flex flex-col gap-4">
           <a href="/sites/" class="text-white text-2xl">Tous les sites</a>
@@ -31,7 +22,16 @@
       <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
     </header>
     <main class="w-4/5">
-        <h1>{{ site.name }}</h1>
+        <h1>Ajouter un site</h1>
+        <form action="/sites/add" method="post">
+          <label for="name">Nom du site: </label>
+          <input type="text" name="name" id="name" required>
+          <label for="host">Adresse IP: </label>
+          <input type="text" name="host" id="host" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" required>
+          <label for="port">Port: </label>
+          <input type="number" min="1" max="65535" name="port" id="port" required>
+          <input type="submit" value="Confirmer">
+        </form>
     </main>
 </body>
 </html>

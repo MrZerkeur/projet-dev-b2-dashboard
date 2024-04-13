@@ -24,6 +24,7 @@ async function bootstrap() {
       cookie: { maxAge: Number(process.env.SESSION_MAX_AGE) },
     }),
   );
+
   app.use(passport.initialize());
   app.use(passport.session());
   app.useGlobalFilters(new AuthExceptionFilter());

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body class="flex flex-row h-screen">
+    <header class="w-1/5 bg-black flex flex-col gap-8">
+      <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+      {{#if loggedInUser.isAdmin}}
+        <div class="flex flex-col gap-4">
+          <a href="/sites/" class="text-white text-2xl">Tous les sites</a>
+          <a href="/sites/add" class="text-white text-2xl">Ajouter un site</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <a href="/users/" class="text-white text-2xl">Tous les utilisateurs</a>
+        </div>
+      {{/if}}
+      <a href="/profile" class="text-white text-2xl">Mon compte</a>
+      <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
+    </header>
+    <main class="w-4/5">
+      <div class="px-12 py-6 flex flex-row items-center gap-6">
+        <h1 class="text-4xl font-medium">Utilisateurs</h1>
+      </div>
+      <div class="px-12 py-6 w-full">        
+        <table class="w-full table-auto border-collapse border border-black">
+          <thead>
+            <tr>
+              <th class="border text-xl">ID</th>
+              <th class="border text-xl">Prénom</th>
+              <th class="border text-xl">Nom</th>
+              <th class="border text-xl">Adresse mail</th>
+              <th class="border text-xl">Administrateur</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each users}}
+            <tr>
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.id }}</td>
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.firstName }}</td>
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.lastName }}</td>
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.email }}</td>
+              {{#if isAdmin}}
+                <td class="px-6 py-4 whitespace-wrap border">Oui</td>
+              {{else}}
+                <td class="px-6 py-4 whitespace-wrap border">Non</td>
+              {{/if}}
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </main>
+</body>
+</html>

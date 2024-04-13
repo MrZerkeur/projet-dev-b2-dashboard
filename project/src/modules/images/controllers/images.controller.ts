@@ -18,9 +18,9 @@ import { AuthenticatedGuard } from 'src/common/guards/authenticated.guard';
 import { SitesService } from 'src/modules/sites/services/sites.service';
 import { UserAccessService } from 'src/modules/user-access/services/user-access.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { createImageDto } from '../dto/create-image.dto';
 import axios from 'axios';
 import { Response } from 'express';
+import { CreateImageDto } from '../dto/create-image.dto';
 
 @Controller('sites/:name/images')
 @UseGuards(AuthenticatedGuard)
@@ -51,7 +51,7 @@ export class ImagesController {
   async addImage(
     @Param('name') name: string,
     @UploadedFile() file: Express.Multer.File,
-    @Body() createImageDto: createImageDto,
+    @Body() createImageDto: CreateImageDto,
     @Req() req,
     @Res() res: Response,
   ) {
@@ -81,6 +81,7 @@ export class ImagesController {
       console.log('API Response:', response.data);
     } catch (error) {
       console.error('API Error:', error.response?.data || error.message);
+      throw new BadRequestException(error.message);
     }
     res.redirect(302, `/sites/${site.name}/images`);
   }

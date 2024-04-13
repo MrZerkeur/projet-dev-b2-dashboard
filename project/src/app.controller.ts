@@ -14,7 +14,6 @@ export class AppController {
   @Get()
   @Render('index')
   async root(@Req() req) {
-    console.log(req.user);
     return await this.usersService.findOneByIdWithSites(req.user.id);
   }
 

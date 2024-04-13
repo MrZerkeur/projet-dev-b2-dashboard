@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body class="flex flex-row h-screen">
+    <header class="w-1/5 bg-black flex flex-col gap-8">
+      <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+      {{#if loggedInUser.isAdmin}}
+        <div class="flex flex-col gap-4">
+          <a href="/sites/" class="text-white text-2xl">Tous les sites</a>
+          <a href="/sites/add" class="text-white text-2xl">Ajouter un site</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <a href="/users/" class="text-white text-2xl">Tous les utilisateurs</a>
+        </div>
+      {{/if}}
+      <a href="/profile" class="text-white text-2xl">Mon compte</a>
+      <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
+    </header>
+    <main class="w-4/5">
+        <h1>Site</h1>
+        <form id="update-form" action="/sites/id/{{ site.id }}" method="post">
+          <label for="name">Nom du site: </label>
+          <input type="text" name="name" id="name" value="{{ site.name }}" required>
+          <label for="host">Adresse IP: </label>
+          <input type="text" name="host" id="host" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value="{{ site.host }}" required>
+          <label for="port">Port: </label>
+          <input type="number" min="1" max="65535" name="port" id="port" value="{{ site.port }}" required>
+          <input type="submit" value="Confirmer">
+        </form>
+        {{#if site.users.length}}
+        <section>
+          <h2>Utilisateurs administrateurs du site</h2>
+          <ul>
+          {{#each site.users}}
+            <li class="flex flex-row items-center gap-6">
+              <h2>{{ this.firstName }} {{ this.lastName }} : {{ this.email }}</h2>
+              <a href="/sites/remove-user/{{../site.id}}/{{this.email}}" >
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 30 30">
+                    <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
+                  </svg>
+                </a>
+            </li>
+          {{/each}}
+          </ul>
+        </section>
+        {{/if}}
+        {{#if users.length}}
+          <form action="/sites/add-user/{{site.id}}" method="post">
+            <label for="users">Sélectionner un utilisateur pour l'ajouter en tant qu'administrateur de ce site</label>
+            <select name="userEmail" id="users">
+              <option value=""></option>
+              {{#each users}}
+                <option value="{{ this.email }}">{{ this.firstName }} {{ this.lastName }} : {{ this.email }}</option>
+              {{/each}}
+            </select>
+            <input type="submit" value="Ajouter utilisateur">
+          </form>
+        {{/if}}
+    </main>
+</body>
+</html>

@@ -18,6 +18,15 @@
         <a href="/sites/{{site.name}}/images/" class="text-white text-2xl">Toutes les images</a>
         <a href="/sites/{{site.name}}/images/add" class="text-white text-2xl">Ajouter une image</a>
       </div>
+      {{#if loggedInUser.isAdmin}}
+        <div class="flex flex-col gap-4">
+          <a href="/sites/" class="text-white text-2xl">Tous les sites</a>
+          <a href="/sites/add" class="text-white text-2xl">Ajouter un site</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <a href="/users/" class="text-white text-2xl">Tous les utilisateurs</a>
+        </div>
+      {{/if}}
       <a href="/profile" class="text-white text-2xl">Mon compte</a>
       <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
     </header>

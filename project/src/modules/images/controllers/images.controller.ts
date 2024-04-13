@@ -69,7 +69,7 @@ export class ImagesController {
       site,
     );
 
-    const apiUrl = `http://API:5000/sites/${site.name}/images`;
+    const apiUrl = `http://127.0.0.1:5000/sites/${site.name}/images`;
     const base64EncodedImage = file.buffer.toString('base64');
     const data = {
       base64_encoded_image: base64EncodedImage,
@@ -84,6 +84,32 @@ export class ImagesController {
       throw new BadRequestException(error.message);
     }
     res.redirect(302, `/sites/${site.name}/images`);
+  }
+
+  @Get('delete/:id')
+  async deleteImage(
+    @Param('name') name: string,
+    @Param('id') id: string,
+    @Req() req,
+    @Res() res: Response,
+  ) {
+    const site = await this.sitesService.findOneByNameWithUsers(name);
+    this.userAccessService.grantUserAccess(req.user, site);
+    const apiUrl = `http://127.0.0.1:5000/sites/${site.name}/images`;
+    const data = { path: await this.imagesService.getPathById(id) };
+    console.log(data);
+
+    await this.imagesService.remove(id);
+
+    try {
+      const response = await axios.delete(apiUrl, { data: data });
+      console.log('API Response:', response.data);
+    } catch (error) {
+      console.error('API Error:', error.response?.data || error.message);
+      throw new BadRequestException(error.message);
+    }
+
+    res.redirect(302, `/sites/${name}/images/`);
   }
 }
 

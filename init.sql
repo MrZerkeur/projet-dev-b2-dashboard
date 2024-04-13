@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS db_projet_dev.sites_users (
 CREATE TABLE IF NOT EXISTS db_projet_dev.images (
     image_id UUID DEFAULT UUID() PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    image_path TEXT NOT NULL,
+    path TEXT NOT NULL,
     section_name VARCHAR(50) NOT NULL,
     site_id UUID NOT NULL,
     FOREIGN KEY (site_id) REFERENCES sites(site_id)

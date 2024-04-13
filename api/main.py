@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file
+from sys import stderr
 import mysql.connector
 import requests
 import base64
@@ -9,15 +10,15 @@ app = Flask(__name__)
 
 conn = mysql.connector.connect(
     host='DB',
-    user='db_projet_dev',
-    password='test',
+    user='maria-woman',
+    password='oui',
     database='db_projet_dev'
 )
 cursor = conn.cursor()
 
 @app.route("/sites/<id_site>/images", methods=['GET'])
 def get_all_images(id_site):
-    cursor.execute('SELECT name, image_path, section_name, site_id from db_projet_dev.images p where site_id = "%s";', (id_site,))
+    cursor.execute('SELECT name, path, section_name, site_id from db_projet_dev.images p where site_id = "%s";', (id_site,))
     rows = cursor.fetchall()
     images_data = []
     for row in rows:
@@ -40,7 +41,7 @@ def get_all_images(id_site):
 
 @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
 def get_specific_image(id_site, image_id):
-    cursor.execute('SELECT name, image_path, section_name from db_projet_dev.images p where image_id = "%s" and site_id = "%s";', (image_id, id_site,))
+    cursor.execute('SELECT name, path, section_name from db_projet_dev.images p where image_id = "%s" and site_id = "%s";', (image_id, id_site,))
     rows = cursor.fetchall()
     images_data = []
     for row in rows:
@@ -110,6 +111,7 @@ def delete_image(id_site):
         else:
             return jsonify({'error': 'File not found'}), 404
     except Exception as e:
+        print(str(e))
         return jsonify({'error': str(e)}), 500
 
 

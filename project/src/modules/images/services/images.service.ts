@@ -29,6 +29,14 @@ export class ImagesService {
     return this.imagesRepository.findOneBy({ id });
   }
 
+  async getPathById(id: string): Promise<string | null> {
+    const image = await this.imagesRepository.findOne({
+      where: { id: id },
+      select: { path: true },
+    });
+    return image.path;
+  }
+
   async remove(id: string): Promise<void> {
     await this.imagesRepository.delete(id);
   }

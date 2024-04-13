@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS db_projet_dev.users (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(62) NOT NULL,
-    salt VARCHAR(15) NOT NULL
+    is_admin BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS db_projet_dev.sites (

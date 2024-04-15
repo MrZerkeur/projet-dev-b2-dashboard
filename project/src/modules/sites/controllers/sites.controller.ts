@@ -59,6 +59,7 @@ export class SitesController {
       createSiteDto.name,
       createSiteDto.host,
       createSiteDto.port.toString(),
+      createSiteDto.tcpPort.toString(),
     );
     res.redirect(302, '/sites');
   }
@@ -101,6 +102,9 @@ export class SitesController {
     }
     if (updateSiteDto.port && updateSiteDto.port.toString() != '') {
       site.port = updateSiteDto.port.toString();
+    }
+    if (updateSiteDto.tcpPort && updateSiteDto.tcpPort.toString() != '') {
+      site.tcpPort = updateSiteDto.tcpPort.toString();
     }
     await this.sitesService.update(site);
 
@@ -150,10 +154,7 @@ export class SitesController {
       throw new BadRequestException('Site not found');
     }
 
-    console.log(site.users);
-
     site.users = site.users.filter((user) => user.email !== email);
-    console.log(site.users);
 
     await this.sitesService.update(site);
 

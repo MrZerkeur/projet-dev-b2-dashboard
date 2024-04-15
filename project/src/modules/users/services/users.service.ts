@@ -50,12 +50,12 @@ export class UsersService {
     return this.usersRepository.findOne({
       where: { id: id },
       relations: { sites: true },
-      select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        sites: { name: true },
-      },
+      // select: {
+      //   id: true,
+      //   firstName: true,
+      //   lastName: true,
+      //   sites: { name: true },
+      // },
     });
   }
 

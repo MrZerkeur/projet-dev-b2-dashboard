@@ -83,6 +83,16 @@ export class ImagesController {
       console.error('API Error:', error.response?.data || error.message);
       throw new BadRequestException(error.message);
     }
+
+    console.log(site.tcpPort);
+
+    await this.notificationService.notifyNewImageAdded(
+      site.host,
+      Number(site.tcpPort),
+      image.id,
+      site.id,
+    ); // ! voir pour le port tcp par rapport à docker
+
     res.redirect(302, `/sites/${site.name}/images`);
   }
 
@@ -109,10 +119,13 @@ export class ImagesController {
       throw new BadRequestException(error.message);
     }
 
+    await this.notificationService.notifyImageDeleted(
+      site.host,
+      Number(site.tcpPort),
+      id,
+      site.id,
+    ); // ! voir pour le port tcp par rapport à docker
+
     res.redirect(302, `/sites/${name}/images/`);
   }
 }
-
-// this.imagesService.create();
-// const resp = await this.notificationService.notifyImageModifications();
-// return { response: resp };

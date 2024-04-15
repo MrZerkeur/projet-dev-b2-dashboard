@@ -1,32 +1,48 @@
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'net';
 import { PromiseSocket } from 'promise-socket';
+import { Buffer } from 'buffer';
 
 @Injectable()
 export class NotificationsService {
-  async notifyTextModifications() {
+  async notifyNewImageAdded(
+    host: string,
+    port: number,
+    imageId: string,
+    siteId: string,
+  ) {
+    console.log(port);
     const socket = new PromiseSocket(new Socket());
+    await socket.connect(port, host);
 
-    await socket.connect(12345, '127.0.0.1');
-    await socket.write('Update: texts');
-    const response: string | Buffer = await socket.read(1024);
+    const message = `0|${imageId}|${siteId}`;
+
+    const buffer = Buffer.from(message, 'utf8');
+
+    await socket.write(buffer);
+    const response: string | Buffer = await socket.read(1);
     console.log(response.toString());
 
     socket.destroy();
-
-    return response.toString();
   }
 
-  async notifyImageModifications() {
+  async notifyImageDeleted(
+    host: string,
+    port: number,
+    imageId: string,
+    siteId: string,
+  ) {
     const socket = new PromiseSocket(new Socket());
+    await socket.connect(port, host);
 
-    await socket.connect(12345, '127.0.0.1');
-    await socket.write('Update: images');
-    const response: string | Buffer = await socket.read(1024);
+    const message = `1|${imageId}|${siteId}`;
+
+    const buffer = Buffer.from(message, 'utf8');
+
+    await socket.write(buffer);
+    const response: string | Buffer = await socket.read(1);
     console.log(response.toString());
 
     socket.destroy();
-
-    return response.toString();
   }
 }

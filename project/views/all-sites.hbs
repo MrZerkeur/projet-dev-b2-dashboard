@@ -32,7 +32,8 @@
             <tr>
               <th class="border text-xl">Nom du site</th>
               <th class="border text-xl">Adresse IP</th>
-              <th class="border text-xl">Port</th>
+              <th class="border text-xl">Port du serveur web</th>
+              <th class="border text-xl">Port du serveur TCP</th>
               <th class="border w-8"></th>
               <th class="border w-8"></th>
             </tr>
@@ -43,6 +44,7 @@
               <td class="px-6 py-4 whitespace-wrap border">{{ this.name }}</td>
               <td class="px-6 py-4 whitespace-wrap border">{{ this.host }}</td>
               <td class="px-6 py-4 whitespace-wrap border">{{ this.port }}</td>
+              <td class="px-6 py-4 whitespace-wrap border">{{ this.tcpPort }}</td>
               <td class="px-6 py-4 whitespace-wrap border">
                 <a href="/sites/delete/{{this.id}}">
                   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">

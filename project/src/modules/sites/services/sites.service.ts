@@ -10,11 +10,17 @@ export class SitesService {
     private readonly sitesRepository: Repository<Site>,
   ) {}
 
-  create(name: string, host: string, port: string): Promise<Site> {
+  create(
+    name: string,
+    host: string,
+    port: string,
+    tcpPort: string,
+  ): Promise<Site> {
     const site = new Site();
     site.name = name;
     site.host = host;
     site.port = port;
+    site.tcpPort = tcpPort;
     return this.sitesRepository.save(site);
   }
 
@@ -47,6 +53,9 @@ export class SitesService {
       select: {
         id: true,
         name: true,
+        host: true,
+        port: true,
+        tcpPort: true,
         users: { id: true, email: true, firstName: true, lastName: true },
       },
       relations: { users: true },
@@ -59,6 +68,9 @@ export class SitesService {
       select: {
         id: true,
         name: true,
+        host: true,
+        port: true,
+        tcpPort: true,
         users: { id: true, email: true, firstName: true, lastName: true },
         texts: { id: true, content: true, sectionName: true },
       },
@@ -75,6 +87,9 @@ export class SitesService {
       select: {
         id: true,
         name: true,
+        host: true,
+        port: true,
+        tcpPort: true,
         users: { id: true, email: true, firstName: true, lastName: true },
         images: { id: true, name: true, sectionName: true, path: true },
       },

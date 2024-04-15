@@ -24,6 +24,9 @@ export class Site {
   @Column('varchar', { name: 'port', length: 5 })
   port: string;
 
+  @Column('varchar', { name: 'tcp_port', length: 5, unique: true })
+  tcpPort: string;
+
   @ManyToMany(() => User, (user) => user.sites, { cascade: true })
   @JoinTable({
     name: 'sites_users',

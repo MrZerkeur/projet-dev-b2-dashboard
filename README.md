@@ -37,3 +37,10 @@ $ npx tailwindcss -i ./assets/tailwind.css -o ./public/css/main.css --watch
 # stop docker containers
 $ docker compose -f .\docker-compose-dev-linux.yml down
 ```
+
+## Admin credentials
+
+```
+email: admin@admin
+password: admin
+```

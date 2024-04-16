@@ -4,20 +4,29 @@ import mysql.connector
 import requests
 import base64
 import os
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-conn = mysql.connector.connect(
-    host="localhost",
-    user='maria-woman',
-    password='oui',
-    database='db_projet_dev'
-)
+# conn = mysql.connector.connect(
+#     host="DB",
+#     user='maria-woman',
+#     password='test',
+#     database='db_projet_dev'
+# )
 
 
 @app.route("/sites/<id_site>/images", methods=['GET'])
 def get_all_images(id_site):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user='maria-woman',
+        password='test',
+        database='db_projet_dev'
+    )
     cursor = conn.cursor()
     cursor.execute('SELECT name, path, section_name, site_id from db_projet_dev.images p where site_id = %s;', (id_site,))
     rows = cursor.fetchall()
@@ -37,14 +46,22 @@ def get_all_images(id_site):
             'section_name': row[2],
             'site_id': row[3],
         }
+        logger.debug(f"Row : {row}")
         images_data.append(image_data)
     print(images_data, file=stderr)
     cursor.close()
+    conn.close()
     
     return jsonify({'images_data': images_data}), 200
 
 @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
 def get_specific_image(id_site, image_id):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user='maria-woman',
+        password='test',
+        database='db_projet_dev'
+    )
     print(id_site, image_id, file=stderr)
     cursor = conn.cursor()
     cursor.execute('SELECT name, path, section_name from db_projet_dev.images p where image_id = %s and site_id = %s;', (image_id, id_site,))
@@ -66,6 +83,7 @@ def get_specific_image(id_site, image_id):
         }
         images_data.append(image_data)
     cursor.close()
+    conn.close()
     return jsonify({'images_data': images_data})
 
 # Reçoit le base64 et le path dans un json
@@ -124,11 +142,18 @@ def delete_image(id_site):
 
 @app.route("/sites/<id_site>/texts", methods=['GET'])
 def get_texts(id_site):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user='maria-woman',
+        password='test',
+        database='db_projet_dev'
+    )
     cursor = conn.cursor()
     cursor.execute('SELECT content, section_name from db_projet_dev.texts t WHERE site_id = %s;', (id_site,))
     texts = cursor.fetchall()
     texts_json = [{'content': text[0], 'section_name': text[1]} for text in texts]
     cursor.close()
+    conn.close()
     return jsonify({'texts': texts_json})
     
 if __name__ == '__main__':

@@ -1,14 +1,14 @@
 version: "3"
 
 services:
-  # back-end:
-  #   image: nest-dev-backend-linux
-  #   ports:
-  #     - "127.0.0.1:3000:3000"
-  #   volumes:
-  #     - ./project:/project
-  #   working_dir: /project
-  #   command: ["npm", "run", "start:dev"]
+  back-end:
+    image: nest-dev-backend-linux
+    ports:
+      - "127.0.0.1:3000:3000"
+    # volumes:
+    #   - ./project:/project
+    # working_dir: /project
+    command: ["npm", "run", "start:dev"]
   
   DB:
     image: mariadb:11.3.2
@@ -17,9 +17,9 @@ services:
     volumes:
       - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
-      - MYSQL_ROOT_PASSWORD=oui
       - MYSQL_USER=maria-woman
-      - MYSQL_PASSWORD=oui
+      - MYSQL_PASSWORD=test
+      - MYSQL_ROOT_PASSWORD=test
       - MYSQL_DATABASE=db_projet_dev
     healthcheck:
         test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]

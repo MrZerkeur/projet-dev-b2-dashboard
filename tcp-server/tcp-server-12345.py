@@ -90,7 +90,7 @@ def main():
                 print(images_data_list)
 
                 for image_data in images_data_list:
-                    image_path = f"assets/images/{image_data['section_name']}/{image_id}/{image_data['name']}"
+                    image_path = f"public/assets/images/{image_data['section_name']}/{image_id}/{image_data['name']}"
                     print(image_path)
                     upload_image(image_data['image_base64'], image_path)
 

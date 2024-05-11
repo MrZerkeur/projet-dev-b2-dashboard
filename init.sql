@@ -45,4 +45,4 @@ CREATE TABLE IF NOT EXISTS db_projet_dev.texts (
     FOREIGN KEY (site_id) REFERENCES sites(site_id)
 );
 
-INSERT INTO users (user_id, first_name, last_name, email, password_hash, is_admin) VALUES ('508901a7-817a-454d-824f-27baa4120c33','admin', 'istrateur', 'admin@admin', '$2y$10$L.MXdcKDwevWYKbqNHPkzeBfTwBeCfHme3J96pbX6gFyPEP0nauA6', True);
+INSERT INTO users (user_id, first_name, last_name, email, password_hash, is_admin) VALUES ('508901a7-817a-454d-824f-27baa4120c33','admin', 'istrateur', 'admin@admin', '$2b$10$r2IamA9904eXVCLDUuRNNewa6RApeuLv9.fkpipyfuQ38Eq9fEEHy', True);

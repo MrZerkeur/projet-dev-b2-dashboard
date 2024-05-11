@@ -23,14 +23,13 @@ DATABASE_NAME=<database_name>
 ## Running the app
 
 ```bash
-# start API and DB with docker compose
-$ docker compose -f .\docker-compose-dev-linux.yml up -d
+# start back-end (Admin dashboard, API and database) with docker compose
+$ docker compose -f .\docker-compose-dev-linux.yml up -d --build
+```
 
-# development + watch mode
-$ npm run start:dev
-
-# development + watch mode for tailwind changes
-$ npx tailwindcss -i ./assets/tailwind.css -o ./public/css/main.css --watch
+```bash
+# start a website (both website and tcp server in a signle container) with docker compose
+$ docker compose -f .\docker-compose-site1.yml up -d --build
 ```
 
 ```bash
@@ -42,5 +41,5 @@ $ docker compose -f .\docker-compose-dev-linux.yml down
 
 ```
 email: admin@admin
-password: admin
+password: 8ook5E@qgmA>~Q1wP7s_
 ```

@@ -1,26 +1,35 @@
 version: "3"
 
 services:
-  # back-end:
-  #   image: nest-dev-backend-linux
-  #   ports:
-  #     - "127.0.0.1:3000:3000"
-  #   volumes:
-  #     - ./project:/project
-  #   working_dir: /project
-  #   command: ["npm", "run", "start:dev"]
+  back-end:
+    build:
+      context: .
+      dockerfile: backend-dev-linux.Dockerfile
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - SESSION_SECRET=${SESSION_SECRET}
+      - SESSION_MAX_AGE=${SESSION_MAX_AGE}
+      - SESSION_RESAVE=${SESSION_RESAVE}
+      - SESSION_SAVE_UNINITIALIZED=${SESSION_SAVE_UNINITIALIZED}
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+    command: ["npm", "run", "start:dev"]
   
-  DB:
+  db:
     image: mariadb:11.3.2
     ports:
       - "3306:3306"
     volumes:
       - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
-      - MYSQL_ROOT_PASSWORD=oui
-      - MYSQL_USER=maria-woman
-      - MYSQL_PASSWORD=oui
-      - MYSQL_DATABASE=db_projet_dev
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - MYSQL_USER=${DATABASE_USERNAME}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_NAME}
     healthcheck:
         test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
         start_period: 1m
@@ -29,10 +38,12 @@ services:
         timeout: 5s
         retries: 3
   
-  API:
-    image: python-api
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
     depends_on:
-      DB:
+      db:
         condition: service_healthy
     volumes:
       - "./api:/api"
@@ -40,14 +51,3 @@ services:
       - "127.0.0.1:5000:5000"
     working_dir: /api
     command: ["python", main.py]
-
-
-  # file-server:
-  #   image: python-file-server
-  #   volumes:
-  #     - "./file-server:/file-server"
-  #   working_dir: /file-server
-  #   ports:
-  #     - "127.0.0.1:8000:8000"
-  #   # command: ["python3", "-m", "http.server", "8000"]
-  #   command: ["python3", "file-server.py"]

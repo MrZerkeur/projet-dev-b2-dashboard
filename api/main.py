@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 from sys import stderr
 import mysql.connector
 import requests
@@ -7,17 +8,25 @@ import os
 
 
 app = Flask(__name__)
+CORS(app)
 
-conn = mysql.connector.connect(
-    host="localhost",
-    user='maria-woman',
-    password='oui',
-    database='db_projet_dev'
-)
+#TODO Change to environement variables
+# conn = mysql.connector.connect(
+#     host="db",
+#     user='maria-woman',
+#     password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
+#     database='db_projet_dev'
+# )
 
 
 @app.route("/sites/<id_site>/images", methods=['GET'])
 def get_all_images(id_site):
+    conn = mysql.connector.connect(
+        host="db",
+        user='maria-woman',
+        password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
+        database='db_projet_dev'
+    )
     cursor = conn.cursor()
     cursor.execute('SELECT name, path, section_name, site_id from db_projet_dev.images p where site_id = %s;', (id_site,))
     rows = cursor.fetchall()
@@ -46,6 +55,12 @@ def get_all_images(id_site):
 @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
 def get_specific_image(id_site, image_id):
     print(id_site, image_id, file=stderr)
+    conn = mysql.connector.connect(
+        host="db",
+        user='maria-woman',
+        password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
+        database='db_projet_dev'
+    )
     cursor = conn.cursor()
     cursor.execute('SELECT name, path, section_name from db_projet_dev.images p where image_id = %s and site_id = %s;', (image_id, id_site,))
     rows = cursor.fetchall()
@@ -124,6 +139,12 @@ def delete_image(id_site):
 
 @app.route("/sites/<id_site>/texts", methods=['GET'])
 def get_texts(id_site):
+    conn = mysql.connector.connect(
+        host="db",
+        user='maria-woman',
+        password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
+        database='db_projet_dev'
+    )
     cursor = conn.cursor()
     cursor.execute('SELECT content, section_name from db_projet_dev.texts t WHERE site_id = %s;', (id_site,))
     texts = cursor.fetchall()

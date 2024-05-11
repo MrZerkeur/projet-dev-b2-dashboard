@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  site1:
+    build:
+      context: .
+      dockerfile: site1-test.Dockerfile
+    ports:
+      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:12345:12345"

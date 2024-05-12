@@ -59,12 +59,6 @@ def get_all_images(id_site):
 
 @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
 def get_specific_image(id_site, image_id):
-    conn = mysql.connector.connect(
-        host="localhost",
-        user='maria-woman',
-        password='test',
-        database='db_projet_dev'
-    )
     print(id_site, image_id, file=stderr)
     conn = mysql.connector.connect(
         host="db",

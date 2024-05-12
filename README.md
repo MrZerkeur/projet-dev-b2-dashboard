@@ -83,12 +83,12 @@ $ docker compose -f .\docker-compose-site2.yml up -d --build
 ```
 
 ```bash
-# stop docker containers one by one
+# Arrête les conteneurs un par un
 $ docker compose -f .\docker-compose-dev-linux.yml down
 $ docker compose -f .\docker-compose-site1.yml down
 $ docker compose -f .\docker-compose-site2.yml down
 
-# stop docker containers all
+# Arrête les conteneurs d'un coup
 $ docker compose -f .\docker-compose-site1.yml down --remove-orphans
 ```
 

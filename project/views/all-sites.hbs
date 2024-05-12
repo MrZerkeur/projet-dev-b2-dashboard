@@ -42,7 +42,7 @@
             {{#each sites}}
             <tr>
               <td class="px-6 py-4 whitespace-wrap border">
-                <a href="/sites/{{ this.name }}"></a>
+                <a href="/sites/{{ this.name }}" class="hover:bg-blue-500">{{ this.name }}</a>
               </td>
               <td class="px-6 py-4 whitespace-wrap border">{{ this.host }}</td>
               <td class="px-6 py-4 whitespace-wrap border">{{ this.port }}</td>

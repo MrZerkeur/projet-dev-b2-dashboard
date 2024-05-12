@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  site2:
+    build:
+      context: .
+      dockerfile: site2.Dockerfile
+    ports:
+      - "127.0.0.1:8002:8002"
+      - "127.0.0.1:12346:12346"
+    command: bash -c "python3 tcp-server-12346.py & npm run dev"

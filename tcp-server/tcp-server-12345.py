@@ -51,8 +51,8 @@ def find_and_delete_image(image_id, root_folder):
 
 def main():
     tcp_port = 12345
-    tcp_host = '127.0.0.1'
-    api_host = '127.0.0.1'
+    tcp_host = '0.0.0.0'
+    api_host = 'api'
     api_port = 5000
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -96,7 +96,7 @@ def main():
 
             elif action == 1:
                 print('Delete image')
-                images_folder = 'assets/images/'
+                images_folder = 'public/assets/images/'
                 find_and_delete_image(image_id, images_folder)
                 
             conn.send(b'0')

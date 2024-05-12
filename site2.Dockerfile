@@ -4,22 +4,20 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install nodejs npm -y
 
-COPY /websites/site-1/package*.json ./
+COPY /websites/site-2/package*.json ./
 
 RUN npm install
 
-COPY /websites/site-1/ .
+COPY /websites/site-2/ .
 
 RUN npm run build
 
-EXPOSE 8001
+EXPOSE 8002
 
 RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
 RUN apt-get install python3-requests -y
 
-COPY /tcp-server/tcp-server-12345.py ./
+COPY /tcp-server/tcp-server-12346.py ./
 
-EXPOSE 12345
-
-CMD ["/bin/sh", "-c", "npm start && python3 tcp-server-12345.py"]
+EXPOSE 12346

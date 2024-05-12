@@ -16,9 +16,7 @@ CREATE TABLE IF NOT EXISTS db_projet_dev.sites (
     name VARCHAR(30) UNIQUE,
     host VARCHAR(15),
     port VARCHAR(5),
-    tcp_port VARCHAR(5) UNIQUE,
-    user_id UUID NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    tcp_port VARCHAR(5) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS db_projet_dev.sites_users (
@@ -46,3 +44,7 @@ CREATE TABLE IF NOT EXISTS db_projet_dev.texts (
 );
 
 INSERT INTO users (user_id, first_name, last_name, email, password_hash, is_admin) VALUES ('508901a7-817a-454d-824f-27baa4120c33','admin', 'istrateur', 'admin@admin', '$2b$10$r2IamA9904eXVCLDUuRNNewa6RApeuLv9.fkpipyfuQ38Eq9fEEHy', True);
+
+INSERT INTO sites (site_id, name, host, port, tcp_port) VALUES ('1c951dcf-6a30-4f0d-aa2b-0c2809d2965b','mon-site.fr', 'site1', '8001', '12345');
+
+INSERT INTO sites (site_id, name, host, port, tcp_port) VALUES ('c3c94b9c-c898-4b5e-b747-8d319a5de45b','maitre-chocolat.fr', 'site2', '8002', '12346');

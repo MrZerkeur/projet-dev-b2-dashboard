@@ -22,7 +22,7 @@ def tcp_client(host, port):
 
 if __name__ == "__main__":
     # Specify the host and port of the TCP server
-    server_host = "127.0.0.1"  # Change this to your server's IP address or hostname
+    server_host = "0.0.0.0"  # Change this to your server's IP address or hostname
     server_port = 12345
 
     # Call the TCP client function

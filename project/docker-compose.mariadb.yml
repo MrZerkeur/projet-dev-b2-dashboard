@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: oui
+      MYSQL_USER: maria-woman
+      MYSQL_PASSWORD: oui
+      MYSQL_DATABASE: db_projet_dev
+    ports:
+      - "3306:3306"

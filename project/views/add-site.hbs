@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body class="flex flex-row h-screen">
+    <header class="w-1/5 bg-black flex flex-col gap-8">
+      <h1 class="text-white text-4xl self-center"><a href="/">Admin Dashboard</a></h1>
+      {{#if loggedInUser.isAdmin}}
+        <div class="flex flex-col gap-4">
+          <a href="/sites/" class="text-white text-2xl">Tous les sites</a>
+          <a href="/sites/add" class="text-white text-2xl">Ajouter un site</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <a href="/users/" class="text-white text-2xl">Tous les utilisateurs</a>
+        </div>
+      {{/if}}
+      <a href="/profile" class="text-white text-2xl">Mon compte</a>
+      <a href="/logout" class="text-white text-2xl">Se déconnecter</a>
+    </header>
+    <main class="w-4/5">
+        <h1>Ajouter un site</h1>
+        <form action="/sites/add" method="post">
+          <label for="name">Nom du site: </label>
+          <input type="text" name="name" id="name" required>
+          <label for="host">Hôte du serveur web: </label>
+          <input type="text" name="host" id="host" required> {{!--  minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" --}}
+          <label for="port">Port du serveur web: </label>
+          <input type="number" min="1" max="65535" name="port" id="port" required>
+          <label for="tcp_port">Port du serveur TCP: </label>
+          <input type="number" min="1" max="65535" name="tcpPort" id="tcp_port" required>
+          <input type="submit" value="Confirmer">
+        </form>
+    </main>
+</body>
+</html>

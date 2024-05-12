@@ -5,7 +5,10 @@ import mysql.connector
 import requests
 import base64
 import os
+import logging
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +17,7 @@ CORS(app)
 # conn = mysql.connector.connect(
 #     host="db",
 #     user='maria-woman',
-#     password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
+#     password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O'
 #     database='db_projet_dev'
 # )
 
@@ -46,14 +49,22 @@ def get_all_images(id_site):
             'section_name': row[2],
             'site_id': row[3],
         }
+        logger.debug(f"Row : {row}")
         images_data.append(image_data)
     print(images_data, file=stderr)
     cursor.close()
+    conn.close()
     
     return jsonify({'images_data': images_data}), 200
 
 @app.route("/sites/<id_site>/images/<image_id>", methods=['GET'])
 def get_specific_image(id_site, image_id):
+    conn = mysql.connector.connect(
+        host="localhost",
+        user='maria-woman',
+        password='test',
+        database='db_projet_dev'
+    )
     print(id_site, image_id, file=stderr)
     conn = mysql.connector.connect(
         host="db",
@@ -81,6 +92,7 @@ def get_specific_image(id_site, image_id):
         }
         images_data.append(image_data)
     cursor.close()
+    conn.close()
     return jsonify({'images_data': images_data})
 
 # Reçoit le base64 et le path dans un json
@@ -150,6 +162,7 @@ def get_texts(id_site):
     texts = cursor.fetchall()
     texts_json = [{'content': text[0], 'section_name': text[1]} for text in texts]
     cursor.close()
+    conn.close()
     return jsonify({'texts': texts_json})
     
 if __name__ == '__main__':

@@ -38,7 +38,12 @@
       <label for="name">Nom de l'image</label>
       <input type="text" name="name" id="name" required>
       <label for="section-name">Nom de Section</label>
-      <input type="text" name="sectionName" id="section-name" required>
+      <select name="sectionName" id="section-name">
+        <option value="">--Choisissez une section--</option>
+        <option value="gallery">Galerie</option>
+        <option value="heroImage">Image de fond</option>
+        {{!-- TODO Add other section name --}}
+      </select>
       <input type="submit" value="Ajouter">
     </form>
   </main>

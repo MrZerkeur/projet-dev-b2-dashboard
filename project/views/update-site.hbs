@@ -27,7 +27,7 @@
           <label for="name">Nom du site: </label>
           <input type="text" name="name" id="name" value="{{ site.name }}" required>
           <label for="host">Adresse IP: </label>
-          <input type="text" name="host" id="host" minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" value="{{ site.host }}" required>
+          <input type="text" name="host" id="host" value="{{ site.host }}" required> {{!--  minlength="7" maxlength="15" size="15" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$" --}}
           <label for="port">Port du serveur web: </label>
           <input type="number" min="1" max="65535" name="port" id="port" value="{{ site.port }}" required>
           <label for="tcp_port">Port du serveur TCP: </label>

@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 from sys import stderr
 import mysql.connector
 import requests
@@ -10,11 +11,13 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+CORS(app)
 
+#TODO Change to environement variables
 # conn = mysql.connector.connect(
-#     host="DB",
+#     host="db",
 #     user='maria-woman',
-#     password='test',
+#     password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O'
 #     database='db_projet_dev'
 # )
 
@@ -22,9 +25,9 @@ app = Flask(__name__)
 @app.route("/sites/<id_site>/images", methods=['GET'])
 def get_all_images(id_site):
     conn = mysql.connector.connect(
-        host="localhost",
+        host="db",
         user='maria-woman',
-        password='test',
+        password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
         database='db_projet_dev'
     )
     cursor = conn.cursor()
@@ -63,6 +66,12 @@ def get_specific_image(id_site, image_id):
         database='db_projet_dev'
     )
     print(id_site, image_id, file=stderr)
+    conn = mysql.connector.connect(
+        host="db",
+        user='maria-woman',
+        password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
+        database='db_projet_dev'
+    )
     cursor = conn.cursor()
     cursor.execute('SELECT name, path, section_name from db_projet_dev.images p where image_id = %s and site_id = %s;', (image_id, id_site,))
     rows = cursor.fetchall()
@@ -143,9 +152,9 @@ def delete_image(id_site):
 @app.route("/sites/<id_site>/texts", methods=['GET'])
 def get_texts(id_site):
     conn = mysql.connector.connect(
-        host="localhost",
+        host="db",
         user='maria-woman',
-        password='test',
+        password='Q_ml8G80x]Gborqb!Z$m.8@pg7$O',
         database='db_projet_dev'
     )
     cursor = conn.cursor()

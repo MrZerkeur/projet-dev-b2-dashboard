@@ -1,10 +1,21 @@
-FROM node:21.7-alpine3.18
-RUN npm i -g @nestjs/cli
+# Stage 1: Build environment
+FROM node:18.18.2 AS build
 
-COPY project /project
+RUN npm install -g @nestjs/cli
 
-WORKDIR /project
+WORKDIR /app
 
+COPY project/package*.json ./
 RUN npm install
 
-# RUN chown -R root:root /dist
+COPY project .
+
+RUN npm rebuild bcrypt --build-from-source
+
+# Stage 2: Production environment
+FROM node:18.18.2-alpine
+WORKDIR /app
+
+COPY --from=build /app .
+
+CMD ["npm", "run", "start:dev"]

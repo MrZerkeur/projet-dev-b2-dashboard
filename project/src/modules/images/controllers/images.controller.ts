@@ -69,7 +69,7 @@ export class ImagesController {
       site,
     );
 
-    const apiUrl = `http://API:5000/sites/${site.name}/images`;
+    const apiUrl = `http://api:5000/sites/${site.name}/images`;
     const base64EncodedImage = file.buffer.toString('base64');
     const data = {
       base64_encoded_image: base64EncodedImage,
@@ -105,7 +105,7 @@ export class ImagesController {
   ) {
     const site = await this.sitesService.findOneByNameWithUsers(name);
     this.userAccessService.grantUserAccess(req.user, site);
-    const apiUrl = `http://127.0.0.1:5000/sites/${site.name}/images`;
+    const apiUrl = `http://api:5000/sites/${site.name}/images`;
     const data = { path: await this.imagesService.getPathById(id) };
     console.log(data);
 
